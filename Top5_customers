@@ -1,0 +1,17 @@
+The following query was run to determine the top 5 customers within the top ten cities based on total revenue brought in by each customer.
+
+SELECT B. customer_id,
+B. first_name,
+B. last_name,
+E. country,
+D. city, 
+SUM(A. amount) AS customer_total_payment
+FROM payment A
+INNER JOIN customer B ON A.customer_id = B.customer_id
+INNER JOIN address C ON B. address_id = C. address_id
+INNER JOIN city D ON C. city_id = D. city_id
+INNER JOIN country E ON D. country_id = E. country_id
+WHERE city IN ('Cape Coral', 'Aurora', 'Tanza', 'Santa Brbara dOeste', 'Balikesir', 'Shimonoseki', 'Tanauan', 'Bijapur', 'Liaocheng', 'Fuyu')
+GROUP BY country, city, B. customer_id
+ORDER BY customer_total_payment DESC
+LIMIT 5
